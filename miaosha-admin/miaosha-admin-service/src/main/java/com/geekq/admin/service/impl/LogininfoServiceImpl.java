@@ -10,11 +10,10 @@ import com.geekq.admin.mapper.LogininfoMapper;
 import com.geekq.admin.mapper.UserinfoMapper;
 import com.geekq.admin.service.ILogininfoService;
 import com.geekq.admin.service.RedisCacheStorageService;
-import com.geekq.admin.utils.UserContext;
-import com.geekq.common.enums.Constants;
-import com.geekq.common.enums.ResultStatus;
-import com.geekq.common.utils.MD5.MD5Utils;
-import com.geekq.common.utils.resultbean.ResultGeekQ;
+import com.geekq.miasha.enums.Constants;
+import com.geekq.miasha.enums.enums.ResultStatus;
+import com.geekq.miasha.enums.resultbean.ResultGeekQ;
+import com.geekq.miasha.utils.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,12 +81,12 @@ public class LogininfoServiceImpl implements ILogininfoService {
 	}
 
 	@Override
-	public 	ResultGeekQ<Logininfo>  login(String name, String password, int userType, String ip) {
+	public ResultGeekQ<Logininfo> login(String name, String password, int userType, String ip) {
 		ResultGeekQ<Logininfo> resultGeekQ = ResultGeekQ.build();
 
 		try {
 			IpLog log = new IpLog(name,new Date(),ip,userType,null);
-			Logininfo logininfo = loginInfoMapper.getLoginInfoByNickname(name,Constants.USERTYPE_NORMAL);
+			Logininfo logininfo = loginInfoMapper.getLoginInfoByNickname(name, Constants.USERTYPE_NORMAL);
 			String salt = logininfo.getSalt();
 			Logininfo current = this.loginInfoMapper.login(name,
 					MD5Utils.formPassToDBPass(password,salt), userType);
@@ -101,7 +100,7 @@ public class LogininfoServiceImpl implements ILogininfoService {
 			resultGeekQ.setData(logininfo);
 		} catch (Exception e) {
 			logger.error("登录发生错误!",e);
-			resultGeekQ.withError(ResultStatus.LOGIN_FIAL);
+			resultGeekQ.withError(ResultStatus.FAILD);
 		}
 		return resultGeekQ;
 	}

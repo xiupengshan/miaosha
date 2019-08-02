@@ -6,6 +6,8 @@ import com.geekq.admin.service.RedisCacheStorageService;
 import com.geekq.common.enums.Constants;
 import com.geekq.common.utils.resultbean.ResultGeekQ;
 import com.geekq.common.vo.LoginVo;
+import com.geekq.miasha.enums.Constants;
+import com.geekq.miasha.enums.resultbean.ResultGeekQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +41,8 @@ public class LoginController  extends BaseController {
     @RequestMapping("/login" )
     @ResponseBody
     public ResultGeekQ<Logininfo> dologin(HttpServletResponse response,
-                                        HttpServletRequest request,
-                                        String username, String password) {
+                                          HttpServletRequest request,
+                                          String username, String password) {
         ResultGeekQ<Logininfo> result = ResultGeekQ.build();
 
 
